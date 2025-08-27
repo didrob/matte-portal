@@ -160,7 +160,7 @@
             },
             'ganging': {
                 title: 'Ganging med store tall',
-                explanation: `<h3>Hvordan gange med tall som har flere siffer?</h3><p>Å gange 23 * 14 kan virke vanskelig i hodet. Trikset er å dele opp regnestykket i biter som er enklere.</p><h3>Metode 1: Dele opp</h3><p>Du kan dele opp det ene tallet. 14 er det samme som 10 + 4.</p><div class="example">Regn ut 23 * 14.<br>1. Først, gang med tierne: 23 * 10 = 230.<br>2. Så, gang med enerne: 23 * 4 = 92.<br>3. Legg sammen svarene: 230 + 92 = 322.</div><h3>Metode 2: Standard oppstilling</h3><p>Dette er den klassiske måten man lærer på skolen, som alltid funker.</p><div class="example">  23<br>x 14<br>----<br>  92  (Her har vi regnet 4 * 23)<br> 230  (Her har vi regnet 10 * 23)<br>----<br>=322  (Her legger vi sammen 92 og 230)</div>`,
+                explanation: `<h3>Hvordan gange med tall som har flere siffer?</h3><p>Å gange 23 * 14 kan virke vanskelig i hodet. Trikset er å dele opp regnestykket i biter som er enklere.</p><h3>Metode 1: Dele opp</h3><p>Du kan dele opp det ene tallet. 14 er det samme som 10 + 4.</p><div class="example">Regn ut 23 * 14.<br>1. Først, gang med tierne: 23 * 10 = 230.<br>2. Så, gang med enerne: 23 * 4 = 92.<br>3. Legg sammen svarene: 230 + 92 = 322.</div><h3>Metode 2: Standard oppstilling</h3><p>Dette er den klassiske måten man lærer på skolen, som alltid funker.</p><div class="example">  23<br>x 14<br>----<br>  92  (Her har vi regnet 4 * 23)<br> 230  (Her har vi regnet 10 * 23)<br>----<br>=322  (Her legger vi sammen 92 og 20)</div>`,
                 check: { question: 'Hva er 15 * 12?', answers: [{ text: '180', correct: true }, { text: '170', correct: false }, { text: '152', correct: false }, { text: '190', correct: false }], feedback: 'Stemmer! Du kan tenke 15 * 10 = 150, og 15 * 2 = 30. Til sammen blir det 150 + 30 = 180.' }
             }
         };
@@ -339,8 +339,14 @@
             currentQuestionIndex++;
         }
         function updateHUD() {
-            scoreEl.innerText = score;
-            streakEl.innerText = streak;
+            // scoreEl is not defined yet because the quiz screen is hidden
+            // This is a placeholder until we define the elements inside the quiz screen
+            const scoreDisplay = document.querySelector('#quiz-screen #score');
+            const streakDisplay = document.querySelector('#quiz-screen #streak');
+
+            if(scoreDisplay) scoreDisplay.innerText = score;
+            if(streakDisplay) streakDisplay.innerText = streak;
+
             const currentMonster = monsters.slice().reverse().find(m => streak >= m.streak);
             if (monsterNameEl.innerText !== currentMonster.name) {
                 monsterEmojiEl.classList.add('transform', 'scale-150');
