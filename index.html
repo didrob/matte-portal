@@ -3,45 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Monster Læringsportal</title>
+    <title>Læringsportal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .font-game {
-            font-family: 'Press Start 2P', cursive;
-        }
-        #confetti-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
-        .explanation-content h3 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #facc15; /* yellow-400 */
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .explanation-content p {
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-        .explanation-content .example {
-            background-color: #1e293b; /* slate-800 */
-            padding: 1rem;
-            border-radius: 0.5rem;
-            border-left: 4px solid #facc15; /* yellow-400 */
-            margin-bottom: 1rem;
-            font-family: monospace;
-            white-space: pre-wrap;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .font-game { font-family: 'Press Start 2P', cursive; }
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+        .explanation-content h3 { font-size: 1.25rem; font-weight: bold; color: #facc15; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .explanation-content p { margin-bottom: 1rem; line-height: 1.6; }
+        .explanation-content .example { background-color: #1e293b; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #facc15; margin-bottom: 1rem; font-family: monospace; white-space: pre-wrap; }
     </style>
 </head>
 <body class="bg-slate-900 flex items-center justify-center min-h-screen p-4 text-white">
@@ -50,40 +21,72 @@
 
     <div id="app-container" class="w-full max-w-3xl bg-slate-800 rounded-2xl shadow-lg p-6 md:p-8 border-4 border-slate-700">
         
-        <!-- Main Menu Screen -->
-        <div id="main-menu-screen" class="text-center">
-            <h1 class="text-3xl md:text-4xl font-game text-yellow-400 mb-8">Matte-Portalen</h1>
-            <p class="text-slate-300 mb-8">Hei Erik! Hva vil du gjøre i dag?</p>
+        <!-- Subject Selection Screen -->
+        <div id="subject-selection-screen" class="text-center">
+            <h1 class="text-3xl md:text-4xl font-game text-yellow-400 mb-8">Læringsportalen</h1>
+            <p class="text-slate-300 mb-8">Hei Erik! Hvilket fag vil du jobbe med i dag?</p>
             <div class="space-y-4">
-                <button data-action="start-quiz" class="w-full bg-green-500 text-slate-900 font-bold py-4 px-6 rounded-lg hover:bg-green-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
-                    👾 Ta Utfordringen 👾
+                <button data-subject="matte" class="select-subject-btn w-full bg-blue-500 text-white font-bold py-4 px-6 rounded-lg hover:bg-blue-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
+                    🔢 Matte 🔢
                 </button>
-                <button data-action="start-practice" class="w-full bg-blue-500 text-white font-bold py-4 px-6 rounded-lg hover:bg-blue-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
-                    🧠 Gå til Øvingsrommet 🧠
+                <button data-subject="norsk" class="select-subject-btn w-full bg-red-500 text-white font-bold py-4 px-6 rounded-lg hover:bg-red-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
+                    📖 Norsk 📖
                 </button>
             </div>
+        </div>
+
+        <!-- Main Hub Screen -->
+        <div id="main-hub-screen" class="hidden text-center">
+            <button class="back-to-subjects-btn mb-6 text-yellow-400 font-semibold hover:text-yellow-300">&larr; Bytt fag</button>
+            <h1 id="hub-title" class="text-3xl md:text-4xl font-game text-yellow-400 mb-8"></h1>
+            <div class="space-y-4">
+                <button data-action="start-quiz" class="hub-action-btn w-full bg-green-500 text-slate-900 font-bold py-4 px-6 rounded-lg hover:bg-green-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
+                    👾 Ta Utfordringen 👾
+                </button>
+                <button data-action="start-practice" class="hub-action-btn w-full bg-blue-500 text-white font-bold py-4 px-6 rounded-lg hover:bg-blue-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
+                    🧠 Gå til Øvingsrommet 🧠
+                </button>
+                <button data-action="parent-settings" class="hub-action-btn w-full bg-purple-500 text-white font-bold py-4 px-6 rounded-lg hover:bg-purple-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
+                    ⚙️ Foreldreinnstillinger ⚙️
+                </button>
+            </div>
+        </div>
+        
+        <!-- Parent Settings Screen -->
+        <div id="parent-settings-screen" class="hidden">
+            <button class="back-to-hub-btn mb-6 text-yellow-400 font-semibold hover:text-yellow-300">&larr; Tilbake</button>
+            <h1 class="text-3xl font-game text-center text-yellow-400 mb-8">Innstillinger</h1>
+            <div class="bg-slate-900 p-6 rounded-lg">
+                <label for="prize-input" class="block mb-2 font-bold text-lg text-slate-300">Dagens Premie for Utfordringen:</label>
+                <input type="text" id="prize-input" class="w-full p-3 bg-slate-700 border-2 border-slate-600 rounded-lg text-white focus:outline-none focus:border-yellow-400" placeholder="F.eks. Kino i helgen, velge middag...">
+                <button id="save-prize-btn" class="w-full mt-4 bg-green-500 text-slate-900 font-bold py-3 px-6 rounded-lg hover:bg-green-400 transition-colors">Lagre Premie</button>
+                <p id="prize-feedback" class="text-center mt-3 text-green-400 h-5"></p>
+            </div>
+        </div>
+
+        <!-- Quiz Start Screen -->
+        <div id="quiz-start-screen" class="hidden text-center">
+             <button class="back-to-hub-btn mb-6 text-yellow-400 font-semibold hover:text-yellow-300">&larr; Tilbake</button>
+            <h1 class="text-3xl md:text-4xl font-game text-yellow-400 mb-4">Klar for utfordring?</h1>
+            <p class="text-slate-300 mb-6">Du må klare <strong class="text-white">22 av 25 oppgaver</strong> for å vinne.</p>
+            <div class="bg-slate-900 p-4 rounded-lg mb-8 border-2 border-yellow-500">
+                <h2 class="text-xl font-bold text-yellow-400 mb-2">🏆 PREMIE 🏆</h2>
+                <p id="prize-display" class="text-lg text-white">Overnatting på stuen!</p>
+            </div>
+            <button id="start-btn" class="w-full bg-green-500 text-slate-900 font-bold py-4 px-6 rounded-lg hover:bg-green-400 transition-transform transform hover:scale-105 shadow-lg text-xl font-game">
+                START SPILLET!
+            </button>
         </div>
 
         <!-- Practice Hub Screen -->
         <div id="practice-hub-screen" class="hidden">
-            <button class="back-to-menu-btn mb-6 text-yellow-400 font-semibold hover:text-yellow-300">&larr; Tilbake til hovedmenyen</button>
+            <button class="back-to-hub-btn mb-6 text-yellow-400 font-semibold hover:text-yellow-300">&larr; Tilbake</button>
             <h1 class="text-3xl font-game text-center text-yellow-400 mb-8">Øvingsrommet</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button data-topic="brøk" class="practice-topic-btn w-full bg-slate-700 text-white font-bold py-6 px-4 rounded-lg hover:bg-slate-600 transition-colors text-lg">
-                    Brøkregning
-                </button>
-                 <button data-topic="prosent" class="practice-topic-btn w-full bg-slate-700 text-white font-bold py-6 px-4 rounded-lg hover:bg-slate-600 transition-colors text-lg">
-                    Prosent
-                </button>
-                 <button data-topic="geometri" class="practice-topic-btn w-full bg-slate-700 text-white font-bold py-6 px-4 rounded-lg hover:bg-slate-600 transition-colors text-lg">
-                    Geometri
-                </button>
-                 <button data-topic="ganging" class="practice-topic-btn w-full bg-slate-700 text-white font-bold py-6 px-4 rounded-lg hover:bg-slate-600 transition-colors text-lg">
-                    Ganging
-                </button>
+            <div id="practice-topics-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Practice topics will be inserted here -->
             </div>
         </div>
-
+        
         <!-- Topic View Screen -->
         <div id="topic-view-screen" class="hidden">
             <button class="back-to-practice-hub-btn mb-6 text-yellow-400 font-semibold hover:text-yellow-300">&larr; Tilbake til Øvingsrommet</button>
@@ -96,174 +99,211 @@
                 <p id="check-feedback" class="text-center mt-4 font-bold"></p>
             </div>
         </div>
-
+        
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="hidden">
-            <!-- Top HUD -->
-            <div class="flex justify-between items-center mb-4 bg-slate-900 p-3 rounded-lg border-2 border-slate-700">
-                <button class="back-to-menu-btn text-sm text-yellow-400 hover:text-yellow-300">&larr; Avslutt</button>
-                <div class="text-center">
-                    <div id="monster-emoji" class="text-4xl transition-transform duration-300">🥚</div>
-                    <div id="monster-name" class="text-xs font-bold text-cyan-400">Egg</div>
-                </div>
-                <div>
-                    <span class="font-bold text-red-500">STREAK:</span>
-                    <span id="streak" class="font-bold text-xl">0</span> 🔥
-                </div>
-            </div>
-            <div class="w-full bg-slate-700 rounded-full h-4 mb-4 border-2 border-slate-600">
-                <div id="progress-bar" class="bg-green-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
-            </div>
-            <div id="question-container" class="mb-4 bg-slate-900 p-6 rounded-lg border-2 border-slate-700">
-                <p id="question-text" class="text-xl md:text-2xl font-bold text-center text-white mb-6 min-h-[60px]"></p>
-                <div id="answer-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-            </div>
-            <div class="flex justify-end mb-2">
-                <button id="hint-btn" class="text-sm text-yellow-400 hover:text-yellow-300 font-semibold transition-colors disabled:opacity-50">Hint? 💡</button>
-            </div>
+            <div class="flex justify-between items-center mb-4 bg-slate-900 p-3 rounded-lg border-2 border-slate-700"><button class="back-to-hub-btn text-sm text-yellow-400 hover:text-yellow-300">&larr; Avslutt</button><div class="text-center"><div id="monster-emoji" class="text-4xl transition-transform duration-300">🥚</div><div id="monster-name" class="text-xs font-bold text-cyan-400">Egg</div></div><div><span class="font-bold text-yellow-400">SCORE:</span> <span id="score" class="font-bold text-xl">0</span></div><div><span class="font-bold text-red-500">STREAK:</span> <span id="streak" class="font-bold text-xl">0</span> 🔥</div></div>
+            <div class="w-full bg-slate-700 rounded-full h-4 mb-4 border-2 border-slate-600"><div id="progress-bar" class="bg-green-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div></div>
+            <div id="question-container" class="mb-4 bg-slate-900 p-6 rounded-lg border-2 border-slate-700"><p id="question-text" class="text-xl md:text-2xl font-bold text-center text-white mb-6 min-h-[60px]"></p><div id="answer-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div></div>
+            <div class="flex justify-end mb-2"><button id="hint-btn" class="text-sm text-yellow-400 hover:text-yellow-300 font-semibold transition-colors disabled:opacity-50">Hint? 💡</button></div>
             <div id="hint-container" class="hidden bg-slate-700 p-4 rounded-lg mb-4 text-sm border border-slate-600"><p id="hint-text" class="text-yellow-200"></p></div>
             <div id="feedback-container" class="min-h-[50px] p-3 rounded-lg mt-4 text-center"><p id="feedback-text" class="text-lg font-bold"></p></div>
             <button id="next-btn" class="w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-400 transition-colors shadow-lg text-lg font-game mt-4 hidden">NESTE</button>
         </div>
-
+        
         <!-- Result Screen -->
         <div id="result-screen" class="hidden text-center">
             <h1 id="result-title" class="text-4xl font-game mb-4"></h1>
             <p class="text-slate-300 mb-6 text-lg">Du fikk <span id="final-score" class="font-bold text-yellow-400 text-2xl"></span> av 25 riktige.</p>
             <div id="result-message" class="bg-slate-900 p-6 rounded-lg mb-8 border-2"></div>
-            <div id="practice-container" class="hidden text-left mb-8">
-                 <h2 class="text-xl font-bold text-yellow-400 mb-3">Tips til hva du kan øve på:</h2>
-                 <ul id="practice-list" class="list-disc list-inside text-slate-300 space-y-2"></ul>
-            </div>
+            <div id="practice-container" class="hidden text-left mb-8"><h2 class="text-xl font-bold text-yellow-400 mb-3">Tips til hva du kan øve på:</h2><ul id="practice-list" class="list-disc list-inside text-slate-300 space-y-2"></ul></div>
             <button id="restart-btn" class="w-full bg-yellow-500 text-slate-900 font-bold py-4 px-6 rounded-lg hover:bg-yellow-400 transition-colors shadow-lg text-xl font-game mb-4">PRØV IGJEN</button>
-            <button class="back-to-menu-btn w-full bg-slate-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-500 transition-colors text-lg">TIL HOVEDMENYEN</button>
+            <button class="back-to-hub-btn w-full bg-slate-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-500 transition-colors text-lg">TILBAKE TIL MENYEN</button>
         </div>
+
     </div>
 
     <script>
         // --- DATA ---
-        const practiceTopics = {
-            'brøk': {
-                title: 'Alt om Brøk',
-                explanation: `<h3>Hva er en brøk?</h3><p>Tenk deg en pizza. En brøk forteller deg hvor mange stykker du har av hele pizzaen. En brøk har to tall: en <strong>teller</strong> (oppe) og en <strong>nevner</strong> (nede).</p><div class="example">3/8 &larr; Telleren (3) sier hvor mange stykker du HAR.<br>&uarr; Nevneren (8) sier hvor mange stykker pizzaen er delt i TOTALT.</div><h3>Utvide og Forkorte Brøk</h3><p>Noen ganger kan vi skrive samme brøk på en enklere måte. Dette kalles å <strong>forkorte</strong>. Vi finner det største tallet vi kan dele både teller og nevner på.</p><div class="example">Brøken 4/8. Vi kan dele både 4 og 8 på 4.<br>4 ÷ 4 = 1<br>8 ÷ 4 = 2<br>Så 4/8 er det samme som 1/2. Det er en halv pizza!</div><p>Å <strong>utvide</strong> er det motsatte. Da ganger vi teller og nevner med det samme tallet. Dette er superviktig når vi skal legge sammen brøker.</p><h3>Legge sammen og trekke fra brøk</h3><p><strong>REGEL:</strong> Du kan KUN legge sammen eller trekke fra brøker som har <strong>lik nevner</strong> (fellesnevner)! Hvis de ikke har det, må du utvide en eller begge brøkene først.</p><div class="example">Regn ut 1/2 + 1/4.<br>1. Finn fellesnevner. Vi kan gjøre 2-tallet om til 4 ved å gange med 2.<br>2. Utvid brøken 1/2: (1*2)/(2*2) = 2/4.<br>3. Nå kan vi regne: 2/4 + 1/4 = 3/4. (Vi legger kun sammen tellerne).</div>`,
-                check: { question: 'Hva blir 1/3 + 2/6?', answers: [{ text: '3/9', correct: false }, { text: '4/6 (eller 2/3)', correct: true }, { text: '3/6 (eller 1/2)', correct: false }, { text: '2/18', correct: false }], feedback: 'Riktig! Du måtte utvide 1/3 til 2/6 for å få fellesnevner. 2/6 + 2/6 = 4/6, som kan forkortes til 2/3.' }
-            },
-            'prosent': {
-                title: 'Alt om Prosent',
-                explanation: `<h3>Hva betyr prosent?</h3><p>Ordet "prosent" betyr rett og slett <strong>"per hundre"</strong> eller "hundredel". Så 25% er det samme som 25 av 100, eller brøken 25/100.</p><h3>Veien mellom brøk, desimaltall og prosent</h3><p>Disse tre er bare forskjellige måter å si det samme på. Det er lurt å kunne oversette mellom dem.</p><div class="example">Brøk: 1/4<br>Desimaltall: 1 ÷ 4 = 0.25<br>Prosent: 0.25 * 100 = 25%</div><h3>Finne prosent av et tall</h3><p>Dette er den vanligste oppgaven. For eksempel "Hva er 20% av 300?".</p><div class="example"><strong>Metode 1: Veien om 1%</strong><br>1. Finn 1% av tallet (del på 100): 300 / 100 = 3.<br>2. Gang med prosenten du vil finne: 3 * 20 = 60.<br>Svar: 20% av 300 er 60.<br><br><strong>Metode 2: Gjør om til desimaltall</strong><br>1. Gjør prosenten om til desimaltall: 20% = 0.20.<br>2. Gang med tallet: 300 * 0.20 = 60.</div>`,
-                check: { question: 'En T-skjorte koster 200 kr. Du får 30% rabatt. Hva koster den?', answers: [{ text: '170 kr', correct: false }, { text: '60 kr', correct: false }, { text: '140 kr', correct: true }, { text: '30 kr', correct: false }], feedback: 'Riktig! Først finner du rabatten: 30% av 200 kr er 60 kr. Så trekker du rabatten fra prisen: 200 - 60 = 140 kr.' }
-            },
-            'geometri': {
-                title: 'Omkrets og Areal',
-                explanation: `<h3>Hva er Omkrets?</h3><p>Omkrets er <strong>lengden rundt</strong> en figur. Tenk at du skal gå en runde rundt en fotballbane. Lengden du går er omkretsen. Du finner den ved å plusse sammen lengden på alle sidene.</p><div class="example">Et rektangel har sider på 5 cm og 3 cm.<br>Omkrets = 5 + 3 + 5 + 3 = 16 cm.</div><h3>Hva er Areal?</h3><p>Areal er <strong>overflaten</strong> inni figuren. Tenk at du skal male en vegg. Arealet forteller deg hvor mye maling du trenger for å dekke hele veggen. Svaret gis i "kvadrat-enheter", som cm².</p><div class="example"><strong>Areal av rektangel: Lengde * Bredde</strong><br>Et rektangel er 5 cm langt og 3 cm bredt.<br>Areal = 5 * 3 = 15 cm².<br><br><strong>Areal av trekant: (Grunnlinje * Høyde) / 2</strong><br>En trekant har grunnlinje 6 cm og høyde 4 cm.<br>Areal = (6 * 4) / 2 = 24 / 2 = 12 cm².</div>`,
-                check: { question: 'Hva er arealet av en trekant med grunnlinje 10 cm og høyde 5 cm?', answers: [{ text: '50 cm²', correct: false }, { text: '25 cm²', correct: true }, { text: '15 cm²', correct: false }, { text: '100 cm²', correct: false }], feedback: 'Helt riktig! Formelen er (grunnlinje * høyde) / 2. Altså (10 * 5) / 2 = 50 / 2 = 25 cm².' }
-            },
-            'ganging': {
-                title: 'Ganging med store tall',
-                explanation: `<h3>Hvordan gange med tall som har flere siffer?</h3><p>Å gange 23 * 14 kan virke vanskelig i hodet. Trikset er å dele opp regnestykket i biter som er enklere.</p><h3>Metode 1: Dele opp</h3><p>Du kan dele opp det ene tallet. 14 er det samme som 10 + 4.</p><div class="example">Regn ut 23 * 14.<br>1. Først, gang med tierne: 23 * 10 = 230.<br>2. Så, gang med enerne: 23 * 4 = 92.<br>3. Legg sammen svarene: 230 + 92 = 322.</div><h3>Metode 2: Standard oppstilling</h3><p>Dette er den klassiske måten man lærer på skolen, som alltid funker.</p><div class="example">  23<br>x 14<br>----<br>  92  (Her har vi regnet 4 * 23)<br> 230  (Her har vi regnet 10 * 23)<br>----<br>=322  (Her legger vi sammen 92 og 20)</div>`,
-                check: { question: 'Hva er 15 * 12?', answers: [{ text: '180', correct: true }, { text: '170', correct: false }, { text: '152', correct: false }, { text: '190', correct: false }], feedback: 'Stemmer! Du kan tenke 15 * 10 = 150, og 15 * 2 = 30. Til sammen blir det 150 + 30 = 180.' }
-            }
+        const mattePracticeTopics = {
+            'brøk': { title: 'Alt om Brøk', explanation: `<h3>Hva er en brøk?</h3><p>Tenk deg en pizza. En brøk forteller deg hvor mange stykker du har av hele pizzaen. En brøk har to tall: en <strong>teller</strong> (oppe) og en <strong>nevner</strong> (nede).</p><div class="example">3/8 &larr; Telleren (3) sier hvor mange stykker du HAR.<br>&uarr; Nevneren (8) sier hvor mange stykker pizzaen er delt i TOTALT.</div><h3>Utvide og Forkorte Brøk</h3><p>Noen ganger kan vi skrive samme brøk på en enklere måte. Dette kalles å <strong>forkorte</strong>. Vi finner det største tallet vi kan dele både teller og nevner på.</p><div class="example">Brøken 4/8. Vi kan dele både 4 og 8 på 4.<br>4 ÷ 4 = 1<br>8 ÷ 4 = 2<br>Så 4/8 er det samme som 1/2. Det er en halv pizza!</div><p>Å <strong>utvide</strong> er det motsatte. Da ganger vi teller og nevner med det samme tallet. Dette er superviktig når vi skal legge sammen brøker.</p><h3>Legge sammen og trekke fra brøk</h3><p><strong>REGEL:</strong> Du kan KUN legge sammen eller trekke fra brøker som har <strong>lik nevner</strong> (fellesnevner)! Hvis de ikke har det, må du utvide en eller begge brøkene først.</p><div class="example">Regn ut 1/2 + 1/4.<br>1. Finn fellesnevner. Vi kan gjøre 2-tallet om til 4 ved å gange med 2.<br>2. Utvid brøken 1/2: (1*2)/(2*2) = 2/4.<br>3. Nå kan vi regne: 2/4 + 1/4 = 3/4. (Vi legger kun sammen tellerne).</div>`, check: { question: 'Hva blir 1/3 + 2/6?', answers: [{ text: '3/9', correct: false }, { text: '4/6 (eller 2/3)', correct: true }, { text: '3/6 (eller 1/2)', correct: false }, { text: '2/18', correct: false }], feedback: 'Riktig! Du måtte utvide 1/3 til 2/6 for å få fellesnevner. 2/6 + 2/6 = 4/6, som kan forkortes til 2/3.' } },
+            'prosent': { title: 'Alt om Prosent', explanation: `<h3>Hva betyr prosent?</h3><p>Ordet "prosent" betyr rett og slett <strong>"per hundre"</strong> eller "hundredel". Så 25% er det samme som 25 av 100, eller brøken 25/100.</p><h3>Veien mellom brøk, desimaltall og prosent</h3><p>Disse tre er bare forskjellige måter å si det samme på. Det er lurt å kunne oversette mellom dem.</p><div class="example">Brøk: 1/4<br>Desimaltall: 1 ÷ 4 = 0.25<br>Prosent: 0.25 * 100 = 25%</div><h3>Finne prosent av et tall</h3><p>Dette er den vanligste oppgaven. For eksempel "Hva er 20% av 300?".</p><div class="example"><strong>Metode 1: Veien om 1%</strong><br>1. Finn 1% av tallet (del på 100): 300 / 100 = 3.<br>2. Gang med prosenten du vil finne: 3 * 20 = 60.<br>Svar: 20% av 300 er 60.<br><br><strong>Metode 2: Gjør om til desimaltall</strong><br>1. Gjør prosenten om til desimaltall: 20% = 0.20.<br>2. Gang med tallet: 300 * 0.20 = 60.</div>`, check: { question: 'En T-skjorte koster 200 kr. Du får 30% rabatt. Hva koster den?', answers: [{ text: '170 kr', correct: false }, { text: '60 kr', correct: false }, { text: '140 kr', correct: true }, { text: '30 kr', correct: false }], feedback: 'Riktig! Først finner du rabatten: 30% av 200 kr er 60 kr. Så trekker du rabatten fra prisen: 200 - 60 = 140 kr.' } },
+            'geometri': { title: 'Omkrets og Areal', explanation: `<h3>Hva er Omkrets?</h3><p>Omkrets er <strong>lengden rundt</strong> en figur. Tenk at du skal gå en runde rundt en fotballbane. Lengden du går er omkretsen. Du finner den ved å plusse sammen lengden på alle sidene.</p><div class="example">Et rektangel har sider på 5 cm og 3 cm.<br>Omkrets = 5 + 3 + 5 + 3 = 16 cm.</div><h3>Hva er Areal?</h3><p>Areal er <strong>overflaten</strong> inni figuren. Tenk at du skal male en vegg. Arealet forteller deg hvor mye maling du trenger for å dekke hele veggen. Svaret gis i "kvadrat-enheter", som cm².</p><div class="example"><strong>Areal av rektangel: Lengde * Bredde</strong><br>Et rektangel er 5 cm langt og 3 cm bredt.<br>Areal = 5 * 3 = 15 cm².<br><br><strong>Areal av trekant: (Grunnlinje * Høyde) / 2</strong><br>En trekant har grunnlinje 6 cm og høyde 4 cm.<br>Areal = (6 * 4) / 2 = 24 / 2 = 12 cm².</div>`, check: { question: 'Hva er arealet av en trekant med grunnlinje 10 cm og høyde 5 cm?', answers: [{ text: '50 cm²', correct: false }, { text: '25 cm²', correct: true }, { text: '15 cm²', correct: false }, { text: '100 cm²', correct: false }], feedback: 'Helt riktig! Formelen er (grunnlinje * høyde) / 2. Altså (10 * 5) / 2 = 50 / 2 = 25 cm².' } },
+            'ganging': { title: 'Ganging med store tall', explanation: `<h3>Hvordan gange med tall som har flere siffer?</h3><p>Å gange 23 * 14 kan virke vanskelig i hodet. Trikset er å dele opp regnestykket i biter som er enklere.</p><h3>Metode 1: Dele opp</h3><p>Du kan dele opp det ene tallet. 14 er det samme som 10 + 4.</p><div class="example">Regn ut 23 * 14.<br>1. Først, gang med tierne: 23 * 10 = 230.<br>2. Så, gang med enerne: 23 * 4 = 92.<br>3. Legg sammen svarene: 230 + 92 = 322.</div><h3>Metode 2: Standard oppstilling</h3><p>Dette er den klassiske måten man lærer på skolen, som alltid funker.</p><div class="example">  23<br>x 14<br>----<br>  92  (Her har vi regnet 4 * 23)<br> 230  (Her har vi regnet 10 * 23)<br>----<br>=322  (Her legger vi sammen 92 og 230)</div>`, check: { question: 'Hva er 15 * 12?', answers: [{ text: '180', correct: true }, { text: '170', correct: false }, { text: '152', correct: false }, { text: '190', correct: false }], feedback: 'Stemmer! Du kan tenke 15 * 10 = 150, og 15 * 2 = 30. Til sammen blir det 150 + 30 = 180.' } }
         };
-        const quizData = [
-            { question: "Hva er 14 * 12?", topic: "Ganging og Deling", answers: [{ text: "168", correct: true }, { text: "158", correct: false }, { text: "178", correct: false }, { text: "164", correct: false }], hint: "Del opp regnestykket! Først, gang 14 med 10 (det er 140). Deretter, gang 14 med 2 (det er 28). Til slutt legger du sammen de to svarene: 140 + 28 = ?" },
-            { question: "Regn ut: 144 / 12", topic: "Ganging og Deling", answers: [{ text: "11", correct: false }, { text: "12", correct: true }, { text: "13", correct: false }, { text: "14", correct: false }], hint: "Tenk på 12-gangen. Hvilket tall må du gange med 12 for å få 144?" },
-            { question: "Hva er 1/2 + 1/4?", topic: "Brøkregning", answers: [{ text: "2/6", correct: false }, { text: "1/6", correct: false }, { text: "3/4", correct: true }, { text: "2/4", correct: false }], hint: "For å legge sammen brøker, må de ha samme nevner (tallet nede). Gjør om 1/2 til fjerdedeler. Hvor mange fjerdedeler er en halv? Da kan du legge sammen tellerne (tallene oppe)." },
-            { question: "Hva er 20% av 150?", topic: "Prosentregning", answers: [{ text: "20", correct: false }, { text: "30", correct: true }, { text: "25", correct: false }, { text: "35", correct: false }], hint: "For å finne 20%, kan du først finne 10% (del på 10), og deretter gange det svaret med 2." },
-            { question: "Et rektangel er 9 cm langt og 7 cm bredt. Hva er arealet?", topic: "Geometri", answers: [{ text: "16 cm²", correct: false }, { text: "32 cm²", correct: false }, { text: "63 cm²", correct: true }, { text: "56 cm²", correct: false }], hint: "Arealet av et rektangel finner du ved å gange lengde med bredde." },
-            { question: "Regn ut: 5.6 - 2.25", topic: "Desimaltall", answers: [{ text: "3.35", correct: true }, { text: "3.45", correct: false }, { text: "3.25", correct: false }, { text: "2.35", correct: false }], hint: "Still tallene over hverandre med kommaene på linje. Legg til en 0 etter 5.6 slik at det blir 5.60 for å gjøre det enklere." },
-            { question: "Hva er 3/5 som prosent?", topic: "Brøk og Prosent", answers: [{ text: "35%", correct: false }, { text: "60%", correct: true }, { text: "53%", correct: false }, { text: "75%", correct: false }], hint: "For å gjøre om brøk til prosent, del teller på nevner (3 / 5) og gang svaret med 100." },
-            { question: "En buss starter kl. 13:50. Turen tar 1 time og 25 minutter. Når er bussen fremme?", topic: "Tid og Enheter", answers: [{ text: "15:15", correct: true }, { text: "15:05", correct: false }, { text: "14:75", correct: false }, { text: "15:25", correct: false }], hint: "Legg først til timen: 13:50 + 1 time = 14:50. Legg så til 25 minutter. 10 minutter tar deg til 15:00, og da har du 15 minutter igjen." },
-            { question: "Hva er 25 * 16?", topic: "Ganging og Deling", answers: [{ text: "350", correct: false }, { text: "400", correct: true }, { text: "450", correct: false }, { text: "300", correct: false }], hint: "Dette er et lurt triks! Du kan doble det ene tallet og halvere det andre: 50 * 8. Gjør det en gang til: 100 * 4. Det er mye enklere!" },
-            { question: "Hva er 2/3 av 18?", topic: "Brøkregning", answers: [{ text: "6", correct: false }, { text: "9", correct: false }, { text: "12", correct: true }, { text: "15", correct: false }], hint: "Del først 18 på nevneren (3). Gang deretter svaret med telleren (2)." },
-            { question: "Hva er neste tall i følgen: 5, 9, 13, 17, ...?", topic: "Algebra og Mønster", answers: [{ text: "20", correct: false }, { text: "21", correct: true }, { text: "22", correct: false }, { text: "19", correct: false }], hint: "Se på forskjellen mellom tallene. Hvor mye øker det med for hvert steg?" },
-            { question: "Regn ut: 0.5 * 12", topic: "Desimaltall", answers: [{ text: "6", correct: true }, { text: "5", correct: false }, { text: "7", correct: false }, { text: "6.5", correct: false }], hint: "Å gange med 0.5 er det samme som å dele på 2. Hva er halvparten av 12?" },
-            { question: "En pizza er delt i 8 biter. Du spiser 3 biter. Hvor mange prosent av pizzaen har du spist?", topic: "Brøk og Prosent", answers: [{ text: "30%", correct: false }, { text: "40%", correct: false }, { text: "37.5%", correct: true }, { text: "35%", correct: false }], hint: "Brøken er 3/8. Del 3 på 8, og gang svaret med 100 for å få prosent." },
-            { question: "Hva er omkretsen av et kvadrat med sider på 6 cm?", topic: "Geometri", answers: [{ text: "36 cm", correct: false }, { text: "24 cm", correct: true }, { text: "12 cm", correct: false }, { text: "30 cm", correct: false }], hint: "Omkrets er lengden rundt hele figuren. Et kvadrat har fire like lange sider." },
-            { question: "Regn ut: 99 + 156", topic: "Hoderegning", answers: [{ text: "255", correct: true }, { text: "245", correct: false }, { text: "265", correct: false }, { text: "254", correct: false }], hint: "Et triks: Legg til 100 i stedet for 99 (det blir 256), og trekk deretter fra 1." },
-            { question: "Hva er 15 * 15?", topic: "Ganging og Deling", answers: [{ text: "215", correct: false }, { text: "225", correct: true }, { text: "235", correct: false }, { text: "205", correct: false }], hint: "Dette er et kvadrattall. Prøv å dele det opp: 15 * 10 = 150, og 15 * 5 = 75. Legg dem sammen." },
-            { question: "Gjør om 0.8 til brøk.", topic: "Desimaltall og Brøk", answers: [{ text: "8/100", correct: false }, { text: "4/5", correct: true }, { text: "1/8", correct: false }, { text: "8/1000", correct: false }], hint: "0.8 kan skrives som 8/10. Kan du forenkle den brøken ved å dele teller og nevner på samme tall?" },
-            { question: "En genser koster 400 kr. Du får 25% rabatt. Hva koster genseren?", topic: "Prosentregning", answers: [{ text: "300 kr", correct: true }, { text: "100 kr", correct: false }, { text: "325 kr", correct: false }, { text: "275 kr", correct: false }], hint: "25% er det samme som en fjerdedel. Finn først ut hvor mye rabatten er (1/4 av 400), og trekk det fra prisen." },
-            { question: "Hva er 1001 - 99?", topic: "Hoderegning", answers: [{ text: "901", correct: false }, { text: "902", correct: true }, { text: "912", correct: false }, { text: "892", correct: false }], hint: "Et triks: Trekk fra 100 i stedet for 99 (det blir 901), og legg deretter til 1." },
-            { question: "Hvor mange minutter er det i 3.5 timer?", topic: "Tid og Enheter", answers: [{ text: "180", correct: false }, { text: "210", correct: true }, { text: "190", correct: false }, { text: "350", correct: false }], hint: "Det er 60 minutter i en time. Gang 3 med 60. 0.5 timer er en halv time. Hvor mange minutter er det?" },
-            { question: "Regn ut: 3 * 4 * 5", topic: "Ganging og Deling", answers: [{ text: "60", correct: true }, { text: "50", correct: false }, { text: "12", correct: false }, { text: "40", correct: false }], hint: "Ta det steg for steg. Først 3 * 4, og så ganger du svaret med 5." },
-            { question: "Hva er 50% av 90?", topic: "Prosentregning", answers: [{ text: "40", correct: false }, { text: "50", correct: false }, { text: "45", correct: true }, { text: "35", correct: false }], hint: "50% er det samme som halvparten. Hva er halvparten av 90?" },
-            { question: "En trekant har grunnlinje 10 cm og høyde 6 cm. Hva er arealet?", topic: "Geometri", answers: [{ text: "60 cm²", correct: false }, { text: "30 cm²", correct: true }, { text: "16 cm²", correct: false }, { text: "120 cm²", correct: false }], hint: "Formelen for arealet av en trekant er (grunnlinje * høyde) / 2." },
-            { question: "Forenkle brøken 9/27.", topic: "Brøkregning", answers: [{ text: "1/3", correct: true }, { text: "3/9", correct: false }, { text: "1/4", correct: false }, { text: "9/27", correct: false }], hint: "Hva er det største tallet du kan dele både 9 og 27 på? Tenk på 9-gangen." },
-            { question: "Hvilket tall er størst: 0.7, 0.75 eller 0.079?", topic: "Desimaltall", answers: [{ text: "0.7", correct: false }, { text: "0.079", correct: false }, { text: "0.75", correct: true }, { text: "Alle er like", correct: false }], hint: "For å sammenligne, gi dem like mange desimaler: 0.700, 0.750, og 0.079. Hvilket tall er nå størst?" }
+        const matteQuizData = [
+            // Ganging og Deling (50)
+            { question: "Hva er 13 * 7?", topic: "Ganging og Deling", answers: [{ text: "91", correct: true }, { text: "81", correct: false }, { text: "101", correct: false }, { text: "98", correct: false }], hint: "10 * 7 + 3 * 7" },
+            { question: "Hva er 125 / 5?", topic: "Ganging og Deling", answers: [{ text: "25", correct: true }, { text: "20", correct: false }, { text: "30", correct: false }, { text: "15", correct: false }], hint: "Hvor mange 5-kroner er det i 125 kroner?" },
+            { question: "Hva er 9 * 12?", topic: "Ganging og Deling", answers: [{ text: "108", correct: true }, { text: "98", correct: false }, { text: "118", correct: false }, { text: "106", correct: false }], hint: "10 * 12 minus 12." },
+            { question: "Hva er 56 / 7?", topic: "Ganging og Deling", answers: [{ text: "8", correct: true }, { text: "7", correct: false }, { text: "9", correct: false }, { text: "6", correct: false }], hint: "Fra 7-gangen." },
+            { question: "Hva er 15 * 6?", topic: "Ganging og Deling", answers: [{ text: "90", correct: true }, { text: "80", correct: false }, { text: "100", correct: false }, { text: "95", correct: false }], hint: "10 * 6 + 5 * 6." },
+            { question: "Hva er 200 / 8?", topic: "Ganging og Deling", answers: [{ text: "25", correct: true }, { text: "20", correct: false }, { text: "30", correct: false }, { text: "15", correct: false }], hint: "Halver 200 tre ganger." },
+            { question: "Hva er 11 * 11?", topic: "Ganging og Deling", answers: [{ text: "121", correct: true }, { text: "111", correct: false }, { text: "131", correct: false }, { text: "122", correct: false }], hint: "Et klassisk kvadrattall." },
+            { question: "Hva er 63 / 9?", topic: "Ganging og Deling", answers: [{ text: "7", correct: true }, { text: "8", correct: false }, { text: "6", correct: false }, { text: "9", correct: false }], hint: "Fra 9-gangen." },
+            { question: "Hva er 16 * 4?", topic: "Ganging og Deling", answers: [{ text: "64", correct: true }, { text: "54", correct: false }, { text: "74", correct: false }, { text: "60", correct: false }], hint: "10 * 4 + 6 * 4." },
+            { question: "Hva er 42 / 3?", topic: "Ganging og Deling", answers: [{ text: "14", correct: true }, { text: "12", correct: false }, { text: "16", correct: false }, { text: "13", correct: false }], hint: "Tenk 30 / 3 og 12 / 3." },
+            { question: "Hva er 14 * 12?", topic: "Ganging og Deling", answers: [{ text: "168", correct: true }, { text: "158", correct: false }, { text: "178", correct: false }, { text: "164", correct: false }], hint: "Del opp: 14 * 10 + 14 * 2." },
+            { question: "Regn ut: 144 / 12", topic: "Ganging og Deling", answers: [{ text: "11", correct: false }, { text: "12", correct: true }, { text: "13", correct: false }, { text: "14", correct: false }], hint: "Hvilket tall ganger 12 blir 144?" },
+            { question: "Hva er 25 * 16?", topic: "Ganging og Deling", answers: [{ text: "350", correct: false }, { text: "400", correct: true }, { text: "450", correct: false }, { text: "300", correct: false }], hint: "Doble det ene tallet og halver det andre: 50 * 8." },
+            { question: "Hva er 15 * 15?", topic: "Ganging og Deling", answers: [{ text: "215", correct: false }, { text: "225", correct: true }, { text: "235", correct: false }, { text: "205", correct: false }], hint: "15 * 10 + 15 * 5." },
+            { question: "Regn ut: 3 * 4 * 5", topic: "Ganging og Deling", answers: [{ text: "60", correct: true }, { text: "50", correct: false }, { text: "12", correct: false }, { text: "40", correct: false }], hint: "Ta det steg for steg. Først 3 * 4." },
+            { question: "Hva er 132 / 11?", topic: "Ganging og Deling", answers: [{ text: "12", correct: true }, { text: "11", correct: false }, { text: "13", correct: false }, { text: "10", correct: false }], hint: "11-gangen er enkel: 11 * 10 = 110. Hvor mye mangler?" },
+            { question: "Hva er 7 * 8?", topic: "Ganging og Deling", answers: [{ text: "56", correct: true }, { text: "54", correct: false }, { text: "63", correct: false }, { text: "49", correct: false }], hint: "Dette er fra den lille gangetabellen." },
+            { question: "Hva er 81 / 9?", topic: "Ganging og Deling", answers: [{ text: "8", correct: false }, { text: "9", correct: true }, { text: "7", correct: false }, { text: "10", correct: false }], hint: "Hvilket tall ganger 9 blir 81?" },
+            { question: "Hva er 20 * 15?", topic: "Ganging og Deling", answers: [{ text: "300", correct: true }, { text: "250", correct: false }, { text: "350", correct: false }, { text: "200", correct: false }], hint: "Tenk 2 * 15, og legg på en null." },
+            { question: "Hva er 100 / 4?", topic: "Ganging og Deling", answers: [{ text: "20", correct: false }, { text: "25", correct: true }, { text: "30", correct: false }, { text: "50", correct: false }], hint: "Hvor mange 25-lapper går i en hundrelapp?" },
+            { question: "Hva er 6 * 9?", topic: "Ganging og Deling", answers: [{ text: "54", correct: true }, { text: "56", correct: false }, { text: "45", correct: false }, { text: "63", correct: false }], hint: "Du kan tenke 6 * 10 minus 6." },
+            { question: "Hva er 48 / 6?", topic: "Ganging og Deling", answers: [{ text: "7", correct: false }, { text: "8", correct: true }, { text: "6", correct: false }, { text: "9", correct: false }], hint: "6-gangen: Hva må du gange 6 med for å få 48?" },
+            { question: "Hva er 18 * 5?", topic: "Ganging og Deling", answers: [{ text: "90", correct: true }, { text: "80", correct: false }, { text: "100", correct: false }, { text: "95", correct: false }], hint: "Å gange med 5 er det samme som å gange med 10 og dele på 2." },
+            { question: "Hva er 72 / 8?", topic: "Ganging og Deling", answers: [{ text: "8", correct: false }, { text: "9", correct: true }, { text: "7", correct: false }, { text: "6", correct: false }], hint: "Hvilket tall ganger 8 blir 72?" },
+            { question: "Hva er 30 * 40?", topic: "Ganging og Deling", answers: [{ text: "1200", correct: true }, { text: "120", correct: false }, { text: "700", correct: false }, { text: "12000", correct: false }], hint: "Gang 3 med 4, og legg på begge nullene." },
+            { question: "Hva er 150 / 6?", topic: "Ganging og Deling", answers: [{ text: "25", correct: true }, { text: "20", correct: false }, { text: "30", correct: false }, { text: "15", correct: false }], hint: "120 / 6 er 20. Hva er resten?" },
+            { question: "Hva er 17 * 3?", topic: "Ganging og Deling", answers: [{ text: "51", correct: true }, { text: "41", correct: false }, { text: "61", correct: false }, { text: "53", correct: false }], hint: "10 * 3 + 7 * 3." },
+            { question: "Hva er 96 / 8?", topic: "Ganging og Deling", answers: [{ text: "12", correct: true }, { text: "11", correct: false }, { text: "13", correct: false }, { text: "14", correct: false }], hint: "80 / 8 er 10. Hva er 16 / 8?" },
+            { question: "Hva er 25 * 5?", topic: "Ganging og Deling", answers: [{ text: "125", correct: true }, { text: "100", correct: false }, { text: "150", correct: false }, { text: "120", correct: false }], hint: "Tenk på penger. 5 tjuefem-kroninger." },
+            { question: "Hva er 108 / 9?", topic: "Ganging og Deling", answers: [{ text: "12", correct: true }, { text: "11", correct: false }, { text: "13", correct: false }, { text: "10", correct: false }], hint: "90 / 9 er 10. Hva er resten?" },
+            { question: "Hva er 4 * 14?", topic: "Ganging og Deling", answers: [{ text: "56", correct: true }, { text: "46", correct: false }, { text: "66", correct: false }, { text: "52", correct: false }], hint: "4 * 10 + 4 * 4." },
+            { question: "Hva er 65 / 5?", topic: "Ganging og Deling", answers: [{ text: "13", correct: true }, { text: "12", correct: false }, { text: "14", correct: false }, { text: "15", correct: false }], hint: "50 / 5 er 10. Hva er 15 / 5?" },
+            { question: "Hva er 19 * 2?", topic: "Ganging og Deling", answers: [{ text: "38", correct: true }, { text: "28", correct: false }, { text: "48", correct: false }, { text: "36", correct: false }], hint: "20 * 2 minus 2." },
+            { question: "Hva er 84 / 7?", topic: "Ganging og Deling", answers: [{ text: "12", correct: true }, { text: "11", correct: false }, { text: "13", correct: false }, { text: "14", correct: false }], hint: "70 / 7 er 10. Hva er 14 / 7?" },
+            { question: "Hva er 6 * 13?", topic: "Ganging og Deling", answers: [{ text: "78", correct: true }, { text: "68", correct: false }, { text: "88", correct: false }, { text: "76", correct: false }], hint: "6 * 10 + 6 * 3." },
+            { question: "Hva er 120 / 10?", topic: "Ganging og Deling", answers: [{ text: "12", correct: true }, { text: "10", correct: false }, { text: "1.2", correct: false }, { text: "120", correct: false }], hint: "Fjern en null." },
+            { question: "Hva er 8 * 6?", topic: "Ganging og Deling", answers: [{ text: "48", correct: true }, { text: "42", correct: false }, { text: "54", correct: false }, { text: "56", correct: false }], hint: "Fra den lille gangetabellen." },
+            { question: "Hva er 36 / 4?", topic: "Ganging og Deling", answers: [{ text: "9", correct: true }, { text: "8", correct: false }, { text: "7", correct: false }, { text: "6", correct: false }], hint: "Fra 4-gangen." },
+            { question: "Hva er 15 * 8?", topic: "Ganging og Deling", answers: [{ text: "120", correct: true }, { text: "110", correct: false }, { text: "130", correct: false }, { text: "125", correct: false }], hint: "10 * 8 + 5 * 8." },
+            { question: "Hva er 88 / 11?", topic: "Ganging og Deling", answers: [{ text: "8", correct: true }, { text: "9", correct: false }, { text: "7", correct: false }, { text: "10", correct: false }], hint: "Fra 11-gangen." },
+            { question: "Hva er 7 * 12?", topic: "Ganging og Deling", answers: [{ text: "84", correct: true }, { text: "74", correct: false }, { text: "94", correct: false }, { text: "82", correct: false }], hint: "7 * 10 + 7 * 2." },
+            { question: "Hva er 64 / 8?", topic: "Ganging og Deling", answers: [{ text: "8", correct: true }, { text: "7", correct: false }, { text: "9", correct: false }, { text: "6", correct: false }], hint: "Et kvadrattall." },
+            { question: "Hva er 18 * 3?", topic: "Ganging og Deling", answers: [{ text: "54", correct: true }, { text: "44", correct: false }, { text: "64", correct: false }, { text: "52", correct: false }], hint: "10 * 3 + 8 * 3." },
+            { question: "Hva er 75 / 3?", topic: "Ganging og Deling", answers: [{ text: "25", correct: true }, { text: "20", correct: false }, { text: "30", correct: false }, { text: "15", correct: false }], hint: "Tenk på penger. 75 kroner delt på 3." },
+            { question: "Hva er 5 * 16?", topic: "Ganging og Deling", answers: [{ text: "80", correct: true }, { text: "70", correct: false }, { text: "90", correct: false }, { text: "85", correct: false }], hint: "Halvparten av 10 * 16." },
+            { question: "Hva er 49 / 7?", topic: "Ganging og Deling", answers: [{ text: "7", correct: true }, { text: "6", correct: false }, { text: "8", correct: false }, { text: "9", correct: false }], hint: "Et kvadrattall." },
+            { question: "Hva er 13 * 5?", topic: "Ganging og Deling", answers: [{ text: "65", correct: true }, { text: "55", correct: false }, { text: "75", correct: false }, { text: "60", correct: false }], hint: "10 * 5 + 3 * 5." },
+            { question: "Hva er 110 / 10?", topic: "Ganging og Deling", answers: [{ text: "11", correct: true }, { text: "10", correct: false }, { text: "1.1", correct: false }, { text: "100", correct: false }], hint: "Fjern en null." },
+            { question: "Hva er 12 * 12?", topic: "Ganging og Deling", answers: [{ text: "144", correct: true }, { text: "134", correct: false }, { text: "154", correct: false }, { text: "142", correct: false }], hint: "Et klassisk kvadrattall." },
+            { question: "Hva er 99 / 9?", topic: "Ganging og Deling", answers: [{ text: "11", correct: true }, { text: "10", correct: false }, { text: "9", correct: false }, { text: "12", correct: false }], hint: "Fra 9-gangen." },
+
+            // Brøkregning (50)
+            { question: "Hva er 2/5 + 1/5?", topic: "Brøkregning", answers: [{ text: "3/5", correct: true }, { text: "3/10", correct: false }, { text: "2/10", correct: false }, { text: "1/5", correct: false }], hint: "Når nevneren er lik, kan du legge sammen tellerne." },
+            { question: "Hva er 3/4 - 1/2?", topic: "Brøkregning", answers: [{ text: "1/4", correct: true }, { text: "2/2", correct: false }, { text: "2/4", correct: false }, { text: "1/2", correct: false }], hint: "Gjør om 1/2 til fjerdedeler først." },
+            { question: "Hva er 1/3 av 30?", topic: "Brøkregning", answers: [{ text: "10", correct: true }, { text: "15", correct: false }, { text: "5", correct: false }, { text: "3", correct: false }], hint: "Del 30 på 3." },
+            { question: "Forenkle brøken 10/15.", topic: "Brøkregning", answers: [{ text: "2/3", correct: true }, { text: "1/2", correct: false }, { text: "5/6", correct: false }, { text: "3/4", correct: false }], hint: "Hvilket tall kan du dele både 10 og 15 på?" },
+            { question: "Hva er 5/6 - 1/3?", topic: "Brøkregning", answers: [{ text: "3/6 (1/2)", correct: true }, { text: "4/3", correct: false }, { text: "4/6", correct: false }, { text: "2/3", correct: false }], hint: "Gjør om 1/3 til sjettedeler." },
+            { question: "Hva er 3/2 som blandet tall?", topic: "Brøkregning", answers: [{ text: "1 1/2", correct: true }, { text: "1 1/3", correct: false }, { text: "2 1/3", correct: false }, { text: "1 2/3", correct: false }], hint: "Hvor mange hele får du plass til i 3, og hva er resten?" },
+            { question: "Hva er 1/2 * 1/3?", topic: "Brøkregning", answers: [{ text: "1/6", correct: true }, { text: "2/5", correct: false }, { text: "1/5", correct: false }, { text: "2/6", correct: false }], hint: "Gang teller med teller, og nevner med nevner." },
+            { question: "Hvilken brøk er minst: 2/3 eller 3/5?", topic: "Brøkregning", answers: [{ text: "3/5", correct: true }, { text: "2/3", correct: false }, { text: "De er like", correct: false }, { text: "Umulig å si", correct: false }], hint: "Fellesnevner er 15. 2/3 er 10/15, 3/5 er 9/15." },
+            { question: "Hva er 1/4 av 60?", topic: "Brøkregning", answers: [{ text: "15", correct: true }, { text: "20", correct: false }, { text: "12", correct: false }, { text: "25", correct: false }], hint: "Del 60 på 4." },
+            { question: "Hva er 5/4 - 1?", topic: "Brøkregning", answers: [{ text: "1/4", correct: true }, { text: "4/0", correct: false }, { text: "1", correct: false }, { text: "4/3", correct: false }], hint: "En hel (1) kan skrives som 4/4." },
+            { question: "Hva er 1/2 + 1/4?", topic: "Brøkregning", answers: [{ text: "2/6", correct: false }, { text: "1/6", correct: false }, { text: "3/4", correct: true }, { text: "2/4", correct: false }], hint: "Finn fellesnevner. Gjør 1/2 om til fjerdedeler." },
+            { question: "Hva er 2/3 av 18?", topic: "Brøkregning", answers: [{ text: "6", correct: false }, { text: "9", correct: false }, { text: "12", correct: true }, { text: "15", correct: false }], hint: "Del 18 på 3, og gang svaret med 2." },
+            { question: "Forenkle brøken 9/27.", topic: "Brøkregning", answers: [{ text: "1/3", correct: true }, { text: "3/9", correct: false }, { text: "1/4", correct: false }, { text: "9/27", correct: false }], hint: "Hva er det største tallet du kan dele både 9 og 27 på?" },
+            { question: "Hva er 1 - 1/5?", topic: "Brøkregning", answers: [{ text: "4/5", correct: true }, { text: "1/4", correct: false }, { text: "5/4", correct: false }, { text: "0", correct: false }], hint: "En hel (1) kan skrives som 5/5." },
+            { question: "Hvilken brøk er størst: 1/2 eller 3/5?", topic: "Brøkregning", answers: [{ text: "1/2", correct: false }, { text: "3/5", correct: true }, { text: "De er like", correct: false }, { text: "Umulig å si", correct: false }], hint: "Finn fellesnevner, for eksempel 10. Gjør om begge brøkene til tideler." },
+            { question: "Hva er 3/4 * 2?", topic: "Brøkregning", answers: [{ text: "6/8", correct: false }, { text: "6/4 (eller 1 1/2)", correct: true }, { text: "3/8", correct: false }, { text: "5/4", correct: false }], hint: "Når du ganger en brøk med et heltall, ganger du bare telleren." },
+            { question: "Hva er 7/8 - 3/8?", topic: "Brøkregning", answers: [{ text: "4/8 (1/2)", correct: true }, { text: "4/0", correct: false }, { text: "10/8", correct: false }, { text: "4/16", correct: false }], hint: "Nevnerne er like, så du kan trekke fra tellerne." },
+            { question: "Hva er 1/5 av 50?", topic: "Brøkregning", answers: [{ text: "10", correct: true }, { text: "5", correct: false }, { text: "25", correct: false }, { text: "15", correct: false }], hint: "Del 50 på 5." },
+            { question: "Forenkle brøken 12/18.", topic: "Brøkregning", answers: [{ text: "2/3", correct: true }, { text: "3/4", correct: false }, { text: "1/2", correct: false }, { text: "6/8", correct: false }], hint: "Hva er det største tallet du kan dele både 12 og 18 på?" },
+            { question: "Hva er 2/7 + 3/7?", topic: "Brøkregning", answers: [{ text: "5/7", correct: true }, { text: "5/14", correct: false }, { text: "6/14", correct: false }, { text: "1/7", correct: false }], hint: "Nevnerne er like." },
+            { question: "Hva er 1/2 av 100?", topic: "Brøkregning", answers: [{ text: "50", correct: true }, { text: "25", correct: false }, { text: "75", correct: false }, { text: "10", correct: false }], hint: "Halvparten av 100." },
+            { question: "Hva er 2/2?", topic: "Brøkregning", answers: [{ text: "1", correct: true }, { text: "2", correct: false }, { text: "0", correct: false }, { text: "0.5", correct: false }], hint: "Når teller og nevner er like, er brøken lik 1." },
+            { question: "Hva er 3/5 + 1/10?", topic: "Brøkregning", answers: [{ text: "7/10", correct: true }, { text: "4/15", correct: false }, { text: "8/10", correct: false }, { text: "4/10", correct: false }], hint: "Gjør om 3/5 til tideler." },
+            { question: "Hva er 4/5 av 20?", topic: "Brøkregning", answers: [{ text: "16", correct: true }, { text: "15", correct: false }, { text: "12", correct: false }, { text: "18", correct: false }], hint: "Del 20 på 5, og gang med 4." },
+            { question: "Forenkle brøken 8/24.", topic: "Brøkregning", answers: [{ text: "1/3", correct: true }, { text: "1/4", correct: false }, { text: "2/6", correct: false }, { text: "1/2", correct: false }], hint: "Hva er det største tallet du kan dele både 8 og 24 på?" },
+            { question: "Hva er 1 1/4 som uekte brøk?", topic: "Brøkregning", answers: [{ text: "5/4", correct: true }, { text: "4/5", correct: false }, { text: "3/4", correct: false }, { text: "6/4", correct: false }], hint: "1 hel er 4/4. Legg til den siste fjerdedelen." },
+            { question: "Hva er 2/3 - 1/6?", topic: "Brøkregning", answers: [{ text: "3/6 (1/2)", correct: true }, { text: "1/3", correct: false }, { text: "1/0", correct: false }, { text: "1/6", correct: false }], hint: "Gjør om 2/3 til sjettedeler." },
+            { question: "Hva er 1/10 av 1000?", topic: "Brøkregning", answers: [{ text: "100", correct: true }, { text: "10", correct: false }, { text: "1", correct: false }, { text: "1000", correct: false }], hint: "Del 1000 på 10." },
+            { question: "Hvilken brøk er størst: 7/8 eller 3/4?", topic: "Brøkregning", answers: [{ text: "7/8", correct: true }, { text: "3/4", correct: false }, { text: "De er like", correct: false }, { text: "Umulig å si", correct: false }], hint: "Gjør om 3/4 til åttendedeler." },
+            { question: "Hva er 2 * 2/5?", topic: "Brøkregning", answers: [{ text: "4/5", correct: true }, { text: "4/10", correct: false }, { text: "2/10", correct: false }, { text: "1", correct: false }], hint: "Gang heltallet med telleren." },
+            // Prosentregning (50)
+            { question: "Hva er 10% av 250?", topic: "Prosentregning", answers: [{ text: "25", correct: true }, { text: "2.5", correct: false }, { text: "50", correct: false }, { text: "125", correct: false }], hint: "Å finne 10% er det samme som å dele på 10." },
+            { question: "Hva er 75% av 40?", topic: "Prosentregning", answers: [{ text: "30", correct: true }, { text: "25", correct: false }, { text: "20", correct: false }, { text: "35", correct: false }], hint: "75% er det samme som 3/4. Finn 1/4 av 40 først." },
+            { question: "En vare koster 500 kr. Prisen øker med 10%. Hva er ny pris?", topic: "Prosentregning", answers: [{ text: "550 kr", correct: true }, { text: "510 kr", correct: false }, { text: "505 kr", correct: false }, { text: "600 kr", correct: false }], hint: "Finn 10% av 500 og legg det til den originale prisen." },
+            { question: "Gjør om 0.45 til prosent.", topic: "Prosentregning", answers: [{ text: "45%", correct: true }, { text: "4.5%", correct: false }, { text: "0.45%", correct: false }, { text: "450%", correct: false }], hint: "Gang desimaltallet med 100." },
+            { question: "Hva er 1% av 1200?", topic: "Prosentregning", answers: [{ text: "12", correct: true }, { text: "1.2", correct: false }, { text: "120", correct: false }, { text: "0.12", correct: false }], hint: "Del på 100." },
+            { question: "Hva er 20% av 150?", topic: "Prosentregning", answers: [{ text: "20", correct: false }, { text: "30", correct: true }, { text: "25", correct: false }, { text: "35", correct: false }], hint: "Finn 10% (del på 10) og gang med 2." },
+            { question: "En genser koster 400 kr. Du får 25% rabatt. Hva koster genseren?", topic: "Prosentregning", answers: [{ text: "300 kr", correct: true }, { text: "100 kr", correct: false }, { text: "325 kr", correct: false }, { text: "275 kr", correct: false }], hint: "25% er en fjerdedel. Finn rabatten og trekk den fra prisen." },
+            { question: "Hva er 50% av 90?", topic: "Prosentregning", answers: [{ text: "40", correct: false }, { text: "50", correct: false }, { text: "45", correct: true }, { text: "35", correct: false }], hint: "50% er det samme som halvparten." },
+            { question: "Du får 8 av 10 riktige på en prøve. Hvor mange prosent er det?", topic: "Prosentregning", answers: [{ text: "80%", correct: true }, { text: "70%", correct: false }, { text: "85%", correct: false }, { text: "90%", correct: false }], hint: "Brøken er 8/10. Gang med 100 for å få prosent." },
+            { question: "Gjør om 3/4 til prosent.", topic: "Prosentregning", answers: [{ text: "75%", correct: true }, { text: "60%", correct: false }, { text: "50%", correct: false }, { text: "80%", correct: false }], hint: "3 delt på 4, ganget med 100." },
+            { question: "Hva er 200% av 50?", topic: "Prosentregning", answers: [{ text: "100", correct: true }, { text: "200", correct: false }, { text: "50", correct: false }, { text: "25", correct: false }], hint: "200% betyr det dobbelte." },
+            { question: "En kinobillett koster 120 kr. Med studentrabatt på 15%, hva blir prisen?", topic: "Prosentregning", answers: [{ text: "102 kr", correct: true }, { text: "105 kr", correct: false }, { text: "108 kr", correct: false }, { text: "90 kr", correct: false }], hint: "Finn 10% (12 kr) og 5% (6 kr). Trekk fra summen." },
+            { question: "Gjør om 7% til desimaltall.", topic: "Prosentregning", answers: [{ text: "0.07", correct: true }, { text: "0.7", correct: false }, { text: "7.0", correct: false }, { text: "0.007", correct: false }], hint: "Del prosenten på 100." },
+            { question: "Hva er 30% av 300?", topic: "Prosentregning", answers: [{ text: "90", correct: true }, { text: "30", correct: false }, { text: "60", correct: false }, { text: "100", correct: false }], hint: "Finn 10% (30) og gang med 3." },
+            { question: "En pizza har 8 stykker. Du spiser 2. Hvor mange prosent har du spist?", topic: "Prosentregning", answers: [{ text: "25%", correct: true }, { text: "20%", correct: false }, { text: "30%", correct: false }, { text: "15%", correct: false }], hint: "Brøken er 2/8, som er det samme som 1/4." },
+            { question: "Hva er 5% av 200?", topic: "Prosentregning", answers: [{ text: "10", correct: true }, { text: "5", correct: false }, { text: "20", correct: false }, { text: "15", correct: false }], hint: "Finn 10% (20) og ta halvparten." },
+            { question: "Gjør om 1/5 til prosent.", topic: "Prosentregning", answers: [{ text: "20%", correct: true }, { text: "15%", correct: false }, { text: "25%", correct: false }, { text: "10%", correct: false }], hint: "1 delt på 5, ganget med 100." },
+            { question: "En bok koster 250 kr. Den er på 20% salg. Hva er avslaget i kroner?", topic: "Prosentregning", answers: [{ text: "50 kr", correct: true }, { text: "25 kr", correct: false }, { text: "40 kr", correct: false }, { text: "60 kr", correct: false }], hint: "Finn 10% (25 kr) og gang med 2." },
+            { question: "Hva er 150% av 100?", topic: "Prosentregning", answers: [{ text: "150", correct: true }, { text: "100", correct: false }, { text: "250", correct: false }, { text: "50", correct: false }], hint: "100% er 100. 50% er 50. Legg dem sammen." },
+            { question: "Gjør om 1.25 til prosent.", topic: "Prosentregning", answers: [{ text: "125%", correct: true }, { text: "12.5%", correct: false }, { text: "1.25%", correct: false }, { text: "1250%", correct: false }], hint: "Gang med 100." },
+            // Geometri (50)
+            { question: "Et rektangel er 9 cm langt og 7 cm bredt. Hva er arealet?", topic: "Geometri", answers: [{ text: "16 cm²", correct: false }, { text: "32 cm²", correct: false }, { text: "63 cm²", correct: true }, { text: "56 cm²", correct: false }], hint: "Areal av rektangel = lengde * bredde." },
+            { question: "Hva er omkretsen av et kvadrat med sider på 6 cm?", topic: "Geometri", answers: [{ text: "36 cm", correct: false }, { text: "24 cm", correct: true }, { text: "12 cm", correct: false }, { text: "30 cm", correct: false }], hint: "Omkrets er lengden rundt. Et kvadrat har fire like sider." },
+            { question: "En trekant har grunnlinje 10 cm og høyde 6 cm. Hva er arealet?", topic: "Geometri", answers: [{ text: "60 cm²", correct: false }, { text: "30 cm²", correct: true }, { text: "16 cm²", correct: false }, { text: "120 cm²", correct: false }], hint: "Areal av trekant = (grunnlinje * høyde) / 2." },
+            { question: "Hva er omkretsen av et rektangel med sider 10 cm og 5 cm?", topic: "Geometri", answers: [{ text: "30 cm", correct: true }, { text: "50 cm", correct: false }, { text: "15 cm", correct: false }, { text: "25 cm", correct: false }], hint: "Legg sammen alle fire sidene." },
+            { question: "Et kvadrat har et areal på 49 cm². Hvor lang er hver side?", topic: "Geometri", answers: [{ text: "7 cm", correct: true }, { text: "8 cm", correct: false }, { text: "6 cm", correct: false }, { text: "9 cm", correct: false }], hint: "Hvilket tall ganget med seg selv blir 49?" },
+            { question: "Hvor mange grader er det i en rett vinkel?", topic: "Geometri", answers: [{ text: "90°", correct: true }, { text: "180°", correct: false }, { text: "45°", correct: false }, { text: "360°", correct: false }], hint: "Tenk på hjørnet av et ark." },
+            { question: "Hva er arealet av et kvadrat med sider på 5 cm?", topic: "Geometri", answers: [{ text: "25 cm²", correct: true }, { text: "20 cm²", correct: false }, { text: "10 cm²", correct: false }, { text: "30 cm²", correct: false }], hint: "Side * side." },
+            { question: "En sirkel har en diameter på 10 cm. Hva er radiusen?", topic: "Geometri", answers: [{ text: "5 cm", correct: true }, { text: "10 cm", correct: false }, { text: "20 cm", correct: false }, { text: "2.5 cm", correct: false }], hint: "Radius er halvparten av diameteren." },
+            { question: "Hva kalles en trekant der alle sidene er like lange?", topic: "Geometri", answers: [{ text: "Likesidet", correct: true }, { text: "Likebeint", correct: false }, { text: "Rettvinklet", correct: false }, { text: "Spiss", correct: false }], hint: "Navnet beskriver sidene." },
+            { question: "Hva er omkretsen av en sirkel med radius 10 cm? (Bruk π ≈ 3.14)", topic: "Geometri", answers: [{ text: "62.8 cm", correct: true }, { text: "31.4 cm", correct: false }, { text: "314 cm", correct: false }, { text: "100 cm", correct: false }], hint: "Omkrets = 2 * π * radius." },
+            // Blandede emner (50)
+            { question: "Regn ut: 5.6 - 2.25", topic: "Desimaltall", answers: [{ text: "3.35", correct: true }, { text: "3.45", correct: false }, { text: "3.25", correct: false }, { text: "2.35", correct: false }], hint: "Still opp med komma over komma. Legg til en null på 5.6." },
+            { question: "Hva er 3/5 som prosent?", topic: "Brøk og Prosent", answers: [{ text: "35%", correct: false }, { text: "60%", correct: true }, { text: "53%", correct: false }, { text: "75%", correct: false }], hint: "Del 3 på 5 og gang med 100." },
+            { question: "En buss starter kl. 13:50. Turen tar 1 time og 25 minutter. Når er bussen fremme?", topic: "Tid og Enheter", answers: [{ text: "15:15", correct: true }, { text: "15:05", correct: false }, { text: "14:75", correct: false }, { text: "15:25", correct: false }], hint: "Legg til timen først, deretter minuttene." },
+            { question: "Hva er neste tall i følgen: 5, 9, 13, 17, ...?", topic: "Algebra og Mønster", answers: [{ text: "20", correct: false }, { text: "21", correct: true }, { text: "22", correct: false }, { text: "19", correct: false }], hint: "Hvor mye øker tallet med for hvert steg?" },
+            { question: "Regn ut: 99 + 156", topic: "Hoderegning", answers: [{ text: "255", correct: true }, { text: "245", correct: false }, { text: "265", correct: false }, { text: "254", correct: false }], hint: "Legg til 100 og trekk fra 1." },
+            { question: "Gjør om 0.8 til brøk.", topic: "Desimaltall og Brøk", answers: [{ text: "8/100", correct: false }, { text: "4/5", correct: true }, { text: "1/8", correct: false }, { text: "8/1000", correct: false }], hint: "0.8 kan skrives som 8/10. Kan du forenkle den brøken?" },
+            { question: "Hva er 1001 - 99?", topic: "Hoderegning", answers: [{ text: "901", correct: false }, { text: "902", correct: true }, { text: "912", correct: false }, { text: "892", correct: false }], hint: "Trekk fra 100 og legg til 1." },
+            { question: "Hvor mange minutter er det i 3.5 timer?", topic: "Tid og Enheter", answers: [{ text: "180", correct: false }, { text: "210", correct: true }, { text: "190", correct: false }, { text: "350", correct: false }], hint: "60 minutter i en time. 3 * 60 + en halv time." },
+            { question: "Hvilket tall er størst: 0.7, 0.75 eller 0.079?", topic: "Desimaltall", answers: [{ text: "0.7", correct: false }, { text: "0.079", correct: false }, { text: "0.75", correct: true }, { text: "Alle er like", correct: false }], hint: "For å sammenligne, gi dem like mange desimaler: 0.700, 0.750, og 0.079." },
+            { question: "Regn ut: 12 + 8 * 2", topic: "Regneregler", answers: [{ text: "40", correct: false }, { text: "28", correct: true }, { text: "32", correct: false }, { text: "22", correct: false }], hint: "Husk regnerekkefølgen! Ganging kommer før pluss." },
         ];
+        const norskPracticeTopics = {
+            'ordklasser': { title: 'Ordklasser', explanation: `<h3>Hva er en ordklasse?</h3><p>Akkurat som vi sorterer LEGO-klosser etter farge og form, sorterer vi ord i språket vårt i grupper. Disse gruppene kalles ordklasser. De tre vanligste er substantiv, verb og adjektiv.</p><div class="example"><strong>Substantiv:</strong> Ord for ting, personer og steder.<br>Du kan sette <em>en, ei, et</em> foran. Eks: <em>et hus, en jente, et eple</em>.</div><div class="example"><strong>Verb:</strong> Ord som forteller hva noen gjør.<br>Du kan sette <em>å</em> foran. Eks: <em>å løpe, å sove, å spise</em>.</div><div class="example"><strong>Adjektiv:</strong> Ord som beskriver substantiv.<br>De forteller hvordan noe er. Eks: <em>et <strong>stort</strong> hus, en <strong>snill</strong> jente</em>.</div>`, check: { question: 'Hvilken ordklasse tilhører ordet "hopper"?', answers: [{ text: 'Substantiv', correct: false }, { text: 'Verb', correct: true }, { text: 'Adjektiv', correct: false }], feedback: 'Riktig! Du kan si "å hoppe", derfor er det et verb.' } },
+            'tegnsetting': { title: 'Punktum, Spørsmålstegn, Utropstegn', explanation: `<h3>Når bruker vi de ulike tegnene?</h3><p>Riktig tegnsetting gjør teksten din lett å lese og forstå. De tre vanligste tegnene avslutter en setning.</p><div class="example"><strong>Punktum (.):</strong> Brukes for å avslutte en vanlig fortellende setning.<br>Eks: <em>Hunden sover i kurven sin.</em></div><div class="example"><strong>Spørsmålstegn (?):</strong> Brukes for å avslutte en setning som er et spørsmål.<br>Eks: <em>Hvor er ballen?</em></div><div class="example"><strong>Utropstegn (!):</strong> Brukes for å vise en sterk følelse som glede, sinne eller overraskelse, eller en kommando.<br>Eks: <em>Se opp! For en fin dag!</em></div>`, check: { question: 'Hvilket tegn skal stå på slutten av setningen: "Hva spiser du til lunsj"', answers: [{ text: '.', correct: false }, { text: '!', correct: false }, { text: '?', correct: true }], feedback: 'Helt riktig! Siden setningen er et spørsmål, må vi bruke spørsmålstegn.' } }
+        };
+        const norskQuizData = [
+            { question: 'Hvilken ordklasse er "bil"?', topic: 'Ordklasser', answers: [{ text: 'Verb', correct: false }, { text: 'Substantiv', correct: true }, { text: 'Adjektiv', correct: false }], hint: 'Kan du sette "en, ei, et" foran?' },
+            { question: 'Hvilket tegn mangler? "Pass deg__"', topic: 'Tegnsetting', answers: [{ text: '!', correct: true }, { text: '?', correct: false }, { text: '.', correct: false }], hint: 'Setningen er en advarsel eller kommando.' },
+            { question: 'Hva er et annet ord for "snakke"?', topic: 'Synonymer', answers: [{ text: 'Løpe', correct: false }, { text: 'Prate', correct: true }, { text: 'Lytte', correct: false }], hint: 'Hvilket av ordene betyr nesten det samme?' },
+            { question: 'Hvilken ordklasse er "vakker"?', topic: 'Ordklasser', answers: [{ text: 'Substantiv', correct: false }, { text: 'Adjektiv', correct: true }, { text: 'Verb', correct: false }], hint: 'Beskriver dette ordet en ting?' },
+            { question: 'Sett inn riktig tegn: "Jeg lurer på om det regner__"', topic: 'Tegnsetting', answers: [{ text: '.', correct: true }, { text: '?', correct: false }, { text: '!', correct: false }], hint: 'Er dette et direkte spørsmål?' },
+            { question: 'Hvilket ord er et substantiv?', topic: 'Ordklasser', answers: [{ text: 'Sykler', correct: true }, { text: 'Syklet', correct: false }, { text: 'Sykling', correct: false }], hint: 'Substantiv kan ofte være i flertall.' },
+            { question: 'Hva er det motsatte av "stor"?', topic: 'Antonymer', answers: [{ text: 'Liten', correct: true }, { text: 'Høy', correct: false }, { text: 'Bred', correct: false }], hint: 'Tenk på en elefant og en mus.' },
+            { question: 'Hvilken ordklasse er "løper"?', topic: 'Ordklasser', answers: [{ text: 'Verb', correct: true }, { text: 'Substantiv', correct: false }, { text: 'Adjektiv', correct: false }], hint: 'Dette ordet beskriver en handling.' },
+            { question: 'Hvilket tegn mangler? "Hurra__ Vi vant kampen__"', topic: 'Tegnsetting', answers: [{ text: '!, !', correct: true }, { text: '., .', correct: false }, { text: '?, !', correct: false }], hint: 'Begge setningene uttrykker sterk glede.' },
+            { question: 'Hva betyr "å være i fyr og flamme"?', topic: 'Ordtak', answers: [{ text: 'Å være veldig sint', correct: false }, { text: 'Å være veldig engasjert', correct: true }, { text: 'Å fryse veldig', correct: false }], hint: 'Tenk på energien til et bål.' },
+        ];
+        
+        const allData = {
+            matte: { title: "Matte-Portalen", practice: mattePracticeTopics, quiz: matteQuizData },
+            norsk: { title: "Norsk-Portalen", practice: norskPracticeTopics, quiz: norskQuizData }
+        };
         const monsters = [{ streak: 0, emoji: "🥚", name: "Egg" }, { streak: 3, emoji: "🦎", name: "Lizard" }, { streak: 6, emoji: "🦖", name: "Dino" }, { streak: 10, emoji: "🐉", name: "Dragon" }];
         
-        // --- DOM ELEMENTS & STATE ---
-        const screens = {
-            menu: document.getElementById('main-menu-screen'),
-            practiceHub: document.getElementById('practice-hub-screen'),
-            topicView: document.getElementById('topic-view-screen'),
-            quiz: document.getElementById('quiz-screen'),
-            result: document.getElementById('result-screen')
-        };
-        let currentQuestionIndex, score, streak, shuffledQuestions, topicsToPractice;
+        const screens = { subjectSelection: document.getElementById('subject-selection-screen'), mainHub: document.getElementById('main-hub-screen'), parentSettings: document.getElementById('parent-settings-screen'), quizStart: document.getElementById('quiz-start-screen'), practiceHub: document.getElementById('practice-hub-screen'), topicView: document.getElementById('topic-view-screen'), quiz: document.getElementById('quiz-screen'), result: document.getElementById('result-screen') };
+        let currentSubject, currentQuizData, currentPracticeTopics, currentQuestionIndex, score, streak, shuffledQuestions, topicsToPractice;
         const PASSING_SCORE = 22;
 
-        // --- NAVIGATION ---
-        function showScreen(screenName) {
-            Object.values(screens).forEach(screen => screen.classList.add('hidden'));
-            screens[screenName].classList.remove('hidden');
-        }
+        function showScreen(screenName) { Object.values(screens).forEach(screen => screen.classList.add('hidden')); screens[screenName].classList.remove('hidden'); }
+        document.querySelectorAll('.select-subject-btn').forEach(btn => { btn.addEventListener('click', () => { currentSubject = btn.dataset.subject; currentQuizData = allData[currentSubject].quiz; currentPracticeTopics = allData[currentSubject].practice; document.getElementById('hub-title').innerText = allData[currentSubject].title; showScreen('mainHub'); }); });
+        document.querySelectorAll('.hub-action-btn').forEach(btn => { btn.addEventListener('click', () => { const action = btn.dataset.action; if (action === 'start-quiz') showQuizStartScreen(); if (action === 'start-practice') showPracticeHub(); if (action === 'parent-settings') showParentSettings(); }); });
+        document.querySelectorAll('.back-to-subjects-btn').forEach(btn => btn.addEventListener('click', () => showScreen('subjectSelection')));
+        document.querySelectorAll('.back-to-hub-btn').forEach(btn => btn.addEventListener('click', () => showScreen('mainHub')));
+        document.querySelector('.back-to-practice-hub-btn').addEventListener('click', showPracticeHub);
 
-        document.getElementById('main-menu-screen').addEventListener('click', (e) => {
-            if (e.target.dataset.action === 'start-quiz') startQuiz();
-            if (e.target.dataset.action === 'start-practice') showScreen('practiceHub');
-        });
-        document.querySelectorAll('.back-to-menu-btn').forEach(btn => btn.addEventListener('click', () => showScreen('menu')));
-        document.querySelector('.back-to-practice-hub-btn').addEventListener('click', () => showScreen('practiceHub'));
+        const prizeInput = document.getElementById('prize-input');
+        const savePrizeBtn = document.getElementById('save-prize-btn');
+        const prizeFeedback = document.getElementById('prize-feedback');
+        function showParentSettings() { prizeFeedback.innerText = ''; const savedPrize = localStorage.getItem(`${currentSubject}Prize`) || ''; prizeInput.value = savedPrize; showScreen('parentSettings'); }
+        savePrizeBtn.addEventListener('click', () => { localStorage.setItem(`${currentSubject}Prize`, prizeInput.value); prizeFeedback.innerText = 'Premien er lagret!'; setTimeout(() => prizeFeedback.innerText = '', 2000); });
+        function showQuizStartScreen() { const prize = localStorage.getItem(`${currentSubject}Prize`) || 'En high-five!'; document.getElementById('prize-display').innerText = prize; showScreen('quizStart'); }
 
-        // --- PRACTICE HUB LOGIC ---
-        document.getElementById('practice-hub-screen').addEventListener('click', (e) => {
-            if (e.target.classList.contains('practice-topic-btn')) {
-                const topicKey = e.target.dataset.topic;
-                if (practiceTopics[topicKey]) {
-                    displayTopic(practiceTopics[topicKey]);
-                }
-            }
-        });
-
-        function displayTopic(topic) {
-            document.getElementById('topic-title').innerText = topic.title;
-            document.getElementById('topic-explanation').innerHTML = topic.explanation;
-            
-            const check = topic.check;
-            document.getElementById('check-question').innerText = check.question;
-            const answersContainer = document.getElementById('check-answers');
-            const feedbackEl = document.getElementById('check-feedback');
-            answersContainer.innerHTML = '';
-            feedbackEl.innerText = '';
-            feedbackEl.className = 'text-center mt-4 font-bold';
-            
-            shuffleArray(check.answers).forEach(answer => {
-                const button = document.createElement('button');
-                button.innerText = answer.text;
-                button.classList.add('w-full', 'bg-slate-700', 'text-white', 'font-semibold', 'py-3', 'px-4', 'rounded-lg', 'hover:bg-slate-600');
-                button.onclick = () => {
-                    Array.from(answersContainer.children).forEach(btn => btn.disabled = true);
-                    if (answer.correct) {
-                        button.classList.remove('bg-slate-700');
-                        button.classList.add('bg-green-500');
-                        feedbackEl.innerText = check.feedback;
-                        feedbackEl.classList.add('text-green-400');
-                    } else {
-                        button.classList.remove('bg-slate-700');
-                        button.classList.add('bg-red-500');
-                        feedbackEl.innerText = 'Ikke helt, prøv å lese forklaringen en gang til!';
-                        feedbackEl.classList.add('text-red-400');
-                    }
-                };
-                answersContainer.appendChild(button);
-            });
-
-            showScreen('topicView');
-        }
-
-        // --- QUIZ LOGIC ---
+        function showPracticeHub() { const container = document.getElementById('practice-topics-container'); container.innerHTML = ''; for (const key in currentPracticeTopics) { const topic = currentPracticeTopics[key]; const button = document.createElement('button'); button.dataset.topic = key; button.className = 'practice-topic-btn w-full bg-slate-700 text-white font-bold py-6 px-4 rounded-lg hover:bg-slate-600 transition-colors text-lg'; button.innerText = topic.title; button.addEventListener('click', () => displayTopic(topic)); container.appendChild(button); } showScreen('practiceHub'); }
+        function displayTopic(topic) { document.getElementById('topic-title').innerText = topic.title; document.getElementById('topic-explanation').innerHTML = topic.explanation; const check = topic.check; document.getElementById('check-question').innerText = check.question; const answersContainer = document.getElementById('check-answers'); const feedbackEl = document.getElementById('check-feedback'); answersContainer.innerHTML = ''; feedbackEl.innerText = ''; feedbackEl.className = 'text-center mt-4 font-bold'; shuffleArray(check.answers).forEach(answer => { const button = document.createElement('button'); button.innerText = answer.text; button.classList.add('w-full', 'bg-slate-700', 'text-white', 'font-semibold', 'py-3', 'px-4', 'rounded-lg', 'hover:bg-slate-600'); button.onclick = () => { Array.from(answersContainer.children).forEach(btn => btn.disabled = true); if (answer.correct) { button.classList.remove('bg-slate-700'); button.classList.add('bg-green-500'); feedbackEl.innerText = check.feedback; feedbackEl.classList.add('text-green-400'); } else { button.classList.remove('bg-slate-700'); button.classList.add('bg-red-500'); feedbackEl.innerText = 'Ikke helt, prøv å lese forklaringen en gang til!'; feedbackEl.classList.add('text-red-400'); } }; answersContainer.appendChild(button); }); showScreen('topicView'); }
+        
+        const startBtn = document.getElementById('start-btn');
         const scoreEl = document.getElementById('score');
         const streakEl = document.getElementById('streak');
         const monsterEmojiEl = document.getElementById('monster-emoji');
@@ -279,167 +319,23 @@
         const nextBtn = document.getElementById('next-btn');
         const restartBtn = document.getElementById('restart-btn');
         
+        startBtn.addEventListener('click', startQuiz);
         nextBtn.addEventListener('click', setNextQuestion);
         restartBtn.addEventListener('click', startQuiz);
         hintBtn.addEventListener('click', showHint);
 
         function shuffleArray(array) { return array.sort(() => Math.random() - 0.5); }
-        function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            streak = 0;
-            topicsToPractice = [];
-            shuffledQuestions = shuffleArray([...quizData]).slice(0, 25);
-            updateHUD();
-            setNextQuestion();
-            showScreen('quiz');
-        }
-        function setNextQuestion() {
-            resetState();
-            if (currentQuestionIndex < shuffledQuestions.length) {
-                showQuestion(shuffledQuestions[currentQuestionIndex]);
-                updateProgressBar();
-            } else {
-                showResults();
-            }
-        }
-        function showQuestion(question) {
-            questionTextEl.innerText = question.question;
-            shuffleArray(question.answers).forEach(answer => {
-                const button = document.createElement('button');
-                button.innerText = answer.text;
-                button.classList.add('w-full', 'bg-slate-700', 'text-white', 'font-semibold', 'py-4', 'px-4', 'rounded-lg', 'hover:bg-slate-600', 'transition-all', 'duration-200', 'text-lg');
-                if (answer.correct) button.dataset.correct = true;
-                button.addEventListener('click', selectAnswer);
-                answerButtonsEl.appendChild(button);
-            });
-        }
-        function selectAnswer(e) {
-            const selectedBtn = e.target;
-            const isCorrect = selectedBtn.dataset.correct === "true";
-            Array.from(answerButtonsEl.children).forEach(button => {
-                button.disabled = true;
-                if (button.dataset.correct) button.classList.add('!bg-green-500');
-                else if (button === selectedBtn) button.classList.add('!bg-red-500');
-            });
-            if (isCorrect) {
-                score++; streak++;
-                const positiveFeedback = ["Superbra!", "Riktig!", "Du er en mester!", "Fortsett sånn!", "Utrolig!"];
-                feedbackTextEl.innerText = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
-                feedbackTextEl.classList.add('text-green-400');
-                if (streak === 10) { runConfetti(); feedbackTextEl.innerText = "MEGA-STREAK! 10 PÅ RAD!"; }
-            } else {
-                streak = 0;
-                feedbackTextEl.innerText = "Nesten! Riktig svar er markert.";
-                feedbackTextEl.classList.add('text-red-400');
-                topicsToPractice.push(shuffledQuestions[currentQuestionIndex].topic);
-            }
-            updateHUD();
-            nextBtn.classList.remove('hidden');
-            currentQuestionIndex++;
-        }
-        function updateHUD() {
-            // scoreEl is not defined yet because the quiz screen is hidden
-            // This is a placeholder until we define the elements inside the quiz screen
-            const scoreDisplay = document.querySelector('#quiz-screen #score');
-            const streakDisplay = document.querySelector('#quiz-screen #streak');
-
-            if(scoreDisplay) scoreDisplay.innerText = score;
-            if(streakDisplay) streakDisplay.innerText = streak;
-
-            const currentMonster = monsters.slice().reverse().find(m => streak >= m.streak);
-            if (monsterNameEl.innerText !== currentMonster.name) {
-                monsterEmojiEl.classList.add('transform', 'scale-150');
-                setTimeout(() => monsterEmojiEl.classList.remove('transform', 'scale-150'), 300);
-            }
-            monsterEmojiEl.innerText = currentMonster.emoji;
-            monsterNameEl.innerText = currentMonster.name;
-        }
-        function updateProgressBar() {
-            progressBarEl.style.width = `${(currentQuestionIndex / shuffledQuestions.length) * 100}%`;
-        }
-        function resetState() {
-            nextBtn.classList.add('hidden');
-            hintContainer.classList.add('hidden');
-            hintBtn.disabled = false;
-            feedbackTextEl.innerText = '';
-            feedbackTextEl.className = 'text-lg font-bold';
-            while (answerButtonsEl.firstChild) answerButtonsEl.removeChild(answerButtonsEl.firstChild);
-        }
-        function showHint() {
-            hintTextEl.innerText = shuffledQuestions[currentQuestionIndex].hint;
-            hintContainer.classList.remove('hidden');
-            hintBtn.disabled = true;
-        }
-        function showResults() {
-            const resultTitle = document.getElementById('result-title');
-            const resultMessageEl = document.getElementById('result-message');
-            document.getElementById('final-score').innerText = score;
-            resultTitle.className = 'text-4xl font-game mb-4';
-            resultMessageEl.className = 'bg-slate-900 p-6 rounded-lg mb-8 border-2';
-            if (score >= PASSING_SCORE) {
-                resultTitle.innerText = "DU KLARTE DET!";
-                resultTitle.classList.add('text-green-400');
-                resultMessageEl.innerHTML = `<h2 class="text-xl font-bold text-yellow-400 mb-2">GRATULERER!</h2><p class="text-lg text-white">Du vant utfordringen! Gjør deg klar for overnatting i stua! 🥳</p>`;
-                resultMessageEl.classList.add('border-green-500');
-                runConfetti();
-            } else {
-                resultTitle.innerText = "Nesten...";
-                resultTitle.classList.add('text-red-400');
-                resultMessageEl.innerHTML = `<h2 class="text-xl font-bold text-yellow-400 mb-2">Godt forsøk!</h2><p class="text-lg text-white">Du var bare ${PASSING_SCORE - score} poeng unna. Ta en liten pause og prøv igjen, dette klarer du!</p>`;
-                resultMessageEl.classList.add('border-red-500');
-            }
-            displayPracticeTopics();
-            showScreen('result');
-        }
-        function displayPracticeTopics() {
-            const practiceContainer = document.getElementById('practice-container');
-            const practiceList = document.getElementById('practice-list');
-            practiceList.innerHTML = '';
-            if (topicsToPractice.length === 0) {
-                practiceContainer.classList.add('hidden');
-                return;
-            }
-            const topicCounts = topicsToPractice.reduce((acc, topic) => { acc[topic] = (acc[topic] || 0) + 1; return acc; }, {});
-            const sortedTopics = Object.keys(topicCounts).sort((a, b) => topicCounts[b] - topicCounts[a]);
-            practiceContainer.classList.remove('hidden');
-            sortedTopics.slice(0, 3).forEach(topic => {
-                const li = document.createElement('li');
-                li.textContent = topic;
-                practiceList.appendChild(li);
-            });
-        }
-        function runConfetti() {
-            const confettiCanvas = document.getElementById('confetti-canvas');
-            const ctx = confettiCanvas.getContext('2d');
-            const W = window.innerWidth;
-            const H = window.innerHeight;
-            confettiCanvas.width = W;
-            confettiCanvas.height = H;
-            const particles = [];
-            const particleCount = 150;
-            const colors = ["#4ade80", "#facc15", "#60a5fa", "#f87171", "#a78bfa"];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push({ x: Math.random() * W, y: Math.random() * -H, w: Math.random() * 10 + 5, h: Math.random() * 10 + 5, vx: Math.random() * 20 - 10, vy: Math.random() * 10 + 5, color: colors[Math.floor(Math.random() * colors.length)], angle: Math.random() * Math.PI * 2, spin: Math.random() * 0.2 - 0.1 });
-            }
-            let animationFrame;
-            function draw() {
-                ctx.clearRect(0, 0, W, H);
-                particles.forEach(p => {
-                    ctx.save();
-                    ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
-                    ctx.rotate(p.angle);
-                    ctx.fillStyle = p.color;
-                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-                    ctx.restore();
-                    p.y += p.vy; p.x += p.vx; p.angle += p.spin;
-                    if(p.y > H) { p.x = Math.random() * W; p.y = -50; }
-                });
-                animationFrame = requestAnimationFrame(draw);
-            }
-            draw();
-            setTimeout(() => { cancelAnimationFrame(animationFrame); ctx.clearRect(0, 0, W, H); }, 4000);
-        }
+        function startQuiz() { currentQuestionIndex = 0; score = 0; streak = 0; topicsToPractice = []; shuffledQuestions = shuffleArray([...currentQuizData]).slice(0, 25); updateHUD(); setNextQuestion(); showScreen('quiz'); }
+        function setNextQuestion() { resetState(); if (currentQuestionIndex < shuffledQuestions.length) { showQuestion(shuffledQuestions[currentQuestionIndex]); updateProgressBar(); } else { showResults(); } }
+        function showQuestion(question) { questionTextEl.innerText = question.question; shuffleArray(question.answers).forEach(answer => { const button = document.createElement('button'); button.innerText = answer.text; button.classList.add('w-full', 'bg-slate-700', 'text-white', 'font-semibold', 'py-4', 'px-4', 'rounded-lg', 'hover:bg-slate-600', 'transition-all', 'duration-200', 'text-lg'); if (answer.correct) button.dataset.correct = true; button.addEventListener('click', selectAnswer); answerButtonsEl.appendChild(button); }); }
+        function selectAnswer(e) { const selectedBtn = e.target; const isCorrect = selectedBtn.dataset.correct === "true"; Array.from(answerButtonsEl.children).forEach(button => { button.disabled = true; if (button.dataset.correct) button.classList.add('!bg-green-500'); else if (button === selectedBtn) button.classList.add('!bg-red-500'); }); if (isCorrect) { score++; streak++; const positiveFeedback = ["Superbra!", "Riktig!", "Du er en mester!", "Fortsett sånn!", "Utrolig!"]; feedbackTextEl.innerText = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)]; feedbackTextEl.classList.add('text-green-400'); if (streak === 10) { runConfetti(); feedbackTextEl.innerText = "MEGA-STREAK! 10 PÅ RAD!"; } } else { streak = 0; feedbackTextEl.innerText = "Nesten! Riktig svar er markert."; feedbackTextEl.classList.add('text-red-400'); topicsToPractice.push(shuffledQuestions[currentQuestionIndex].topic); } updateHUD(); nextBtn.classList.remove('hidden'); currentQuestionIndex++; }
+        function updateHUD() { scoreEl.innerText = score; streakEl.innerText = streak; const currentMonster = monsters.slice().reverse().find(m => streak >= m.streak); if (monsterNameEl.innerText !== currentMonster.name) { monsterEmojiEl.classList.add('transform', 'scale-150'); setTimeout(() => monsterEmojiEl.classList.remove('transform', 'scale-150'), 300); } monsterEmojiEl.innerText = currentMonster.emoji; monsterNameEl.innerText = currentMonster.name; }
+        function updateProgressBar() { progressBarEl.style.width = `${(currentQuestionIndex / shuffledQuestions.length) * 100}%`; }
+        function resetState() { nextBtn.classList.add('hidden'); hintContainer.classList.add('hidden'); hintBtn.disabled = false; feedbackTextEl.innerText = ''; feedbackTextEl.className = 'text-lg font-bold'; while (answerButtonsEl.firstChild) answerButtonsEl.removeChild(answerButtonsEl.firstChild); }
+        function showHint() { hintTextEl.innerText = shuffledQuestions[currentQuestionIndex].hint; hintContainer.classList.remove('hidden'); hintBtn.disabled = true; }
+        function showResults() { const resultTitle = document.getElementById('result-title'); const resultMessageEl = document.getElementById('result-message'); document.getElementById('final-score').innerText = score; resultTitle.className = 'text-4xl font-game mb-4'; resultMessageEl.className = 'bg-slate-900 p-6 rounded-lg mb-8 border-2'; if (score >= PASSING_SCORE) { resultTitle.innerText = "DU KLARTE DET!"; resultTitle.classList.add('text-green-400'); const prize = localStorage.getItem(`${currentSubject}Prize`) || 'En high-five!'; resultMessageEl.innerHTML = `<h2 class="text-xl font-bold text-yellow-400 mb-2">GRATULERER!</h2><p class="text-lg text-white">Du vant utfordringen! Premien er: ${prize} 🥳</p>`; resultMessageEl.classList.add('border-green-500'); runConfetti(); } else { resultTitle.innerText = "Nesten..."; resultTitle.classList.add('text-red-400'); resultMessageEl.innerHTML = `<h2 class="text-xl font-bold text-yellow-400 mb-2">Godt forsøk!</h2><p class="text-lg text-white">Du var bare ${PASSING_SCORE - score} poeng unna. Ta en liten pause og prøv igjen, dette klarer du!</p>`; resultMessageEl.classList.add('border-red-500'); } displayPracticeTopics(); showScreen('result'); }
+        function displayPracticeTopics() { const practiceContainer = document.getElementById('practice-container'); const practiceList = document.getElementById('practice-list'); practiceList.innerHTML = ''; if (topicsToPractice.length === 0) { practiceContainer.classList.add('hidden'); return; } const topicCounts = topicsToPractice.reduce((acc, topic) => { acc[topic] = (acc[topic] || 0) + 1; return acc; }, {}); const sortedTopics = Object.keys(topicCounts).sort((a, b) => topicCounts[b] - topicCounts[a]); practiceContainer.classList.remove('hidden'); sortedTopics.slice(0, 3).forEach(topic => { const li = document.createElement('li'); li.textContent = topic; practiceList.appendChild(li); }); }
+        function runConfetti() { const confettiCanvas = document.getElementById('confetti-canvas'); const ctx = confettiCanvas.getContext('2d'); const W = window.innerWidth; const H = window.innerHeight; confettiCanvas.width = W; confettiCanvas.height = H; const particles = []; const particleCount = 150; const colors = ["#4ade80", "#facc15", "#60a5fa", "#f87171", "#a78bfa"]; for (let i = 0; i < particleCount; i++) { particles.push({ x: Math.random() * W, y: Math.random() * -H, w: Math.random() * 10 + 5, h: Math.random() * 10 + 5, vx: Math.random() * 20 - 10, vy: Math.random() * 10 + 5, color: colors[Math.floor(Math.random() * colors.length)], angle: Math.random() * Math.PI * 2, spin: Math.random() * 0.2 - 0.1 }); } let animationFrame; function draw() { ctx.clearRect(0, 0, W, H); particles.forEach(p => { ctx.save(); ctx.translate(p.x + p.w / 2, p.y + p.h / 2); ctx.rotate(p.angle); ctx.fillStyle = p.color; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore(); p.y += p.vy; p.x += p.vx; p.angle += p.spin; if(p.y > H) { p.x = Math.random() * W; p.y = -50; } }); animationFrame = requestAnimationFrame(draw); } draw(); setTimeout(() => { cancelAnimationFrame(animationFrame); ctx.clearRect(0, 0, W, H); }, 4000); }
     </script>
 </body>
 </html>
